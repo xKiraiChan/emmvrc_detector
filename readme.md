@@ -7,7 +7,7 @@ Simple project written in [Rust](https://www.rust-lang.org/) to detect if a user
 This project works by sending a request to the emmVRC servers. 
 Based on the status code we can determine if the user has a password (pin) set.
 
-The username field seems to be ignored except for when it is empty, and I haven't figured out what "loginKey" is used for.
+The username field seems to be ignored except for when it is empty, and "loginKey" is effectively ignored due to this being a single sign on attempt.
 
 # Crates used
 
