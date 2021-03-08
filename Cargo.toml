@@ -1,12 +1,13 @@
 [package]
 name = "emmvrc_detector"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["xKiraiChan <xKiraiChan@gmail.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-text_io = "0.1.8"
-reqwest = "0.11.0"
 tokio = { version = "1.0.2", features = ["full"] }
+text_io = "0.1.8"
+reqwest = "0.11.1"
+futures = "0.3.13"

@@ -1,53 +1,47 @@
+use futures::{stream, StreamExt};
+use reqwest::Client;
 use std::io::Write;
 use text_io::read;
 
 #[tokio::main]
 async fn main() {
-    println!("emmVRC Detecter by xKiraiChan");
+    eprintln!("emmVRC Detecter by xKiraiChan");
 
-    print!("User ID to check: ");
-    std::io::stdout().flush().expect("Failed to flush stdout");
-    let uid: String = read!();
+    if std::env::args().count() > 1 {
+        let client = Client::new();
+        
+        stream::iter(std::env::args().skip(1))
+            .map(|str| {
+                let cli = &client;
 
-    if uid.len() == 10 {
-        println!("Checking Classic ID...")
-    } else if uid.len() == 40 {
-        println!("Checking GUID...")
+                async move {
+                    let res = emmvrc_detector::check_id(&cli, str.clone()).await;
+                
+                    match res {
+                        0 => println!("\x1b[32m[+] {}\x1b[0m", &str),
+                        1 => println!("\x1b[31m[-] {}\x1b[0m", &str),
+                        2 => println!("\x1b[36mInternal error\x1b[0m"),
+                        v => println!("\x1b[36mFailed with code {}\x1b[0m", v),
+                    };
+                }
+            })
+            .buffer_unordered(24)
+            .for_each(|_| async {
+
+            }).await;
     } else {
-        println!("Invalid UserID");
-        quit();
+        eprint!("User ID to check: ");
+        std::io::stdout().flush().expect("Failed to flush stdout");
+        let id: String = read!();
+            
+        match emmvrc_detector::check_id(&Client::new(), id.to_string()).await {
+            0 => println!("\n\x1b[32m{} has used emmVRC before\x1b[0m\n", id),
+            1 => println!("\n\x1b[31m{} has probably not used emmVRC before\x1b[0m\n", id),
+            2 => println!("\n\x1b[36mInternal error\x1b[0m\n"),
+            v => println!("\n\x1b[36mFailed with code {}\x1b[0m\n", v),
+        };
     }
 
-    let client = reqwest::Client::new();
-
-    let body = format!(r#"{{"username":"{}","name":"tupper","password":"{}","loginKey":"1"}}"#, uid, uid);
-
-    match client
-    .post("https://thetrueyoshifan.com:3000/api/authentication/login")
-    .header("User-Agent", "emmVRC/1.0 (Client; emmVRCClient/2.3.0)")
-    .header("Content-Type", "application/json; charset=utf-8")
-    .header("Content-Length", body.len())
-    .body(body)
-    .send()
-    .await {
-        Ok(val) => {
-            let code: u16 = val.status().as_u16();
-
-            if code == 401 {
-                println!("\n\x1b[32m{} has used emmVRC before\x1b[0m\n", uid);
-            } else if code == 200 {
-                println!("\n\x1b[31m{} has probably not used emmVRC before\x1b[0m\n", uid);
-            } else {
-                println!("\n\x1b[36mFailed to detect user due to {}\x1b[0m\n", val.status());
-            }
-        },
-        Err(val) => println!("Failed due to {}", val),
-    };
-
-    quit();
-}
-
-fn quit() {
     print!("Press enter or CTRL-C to close... ");
     std::io::stdout().flush().expect("Failed to flush stdout");
 
