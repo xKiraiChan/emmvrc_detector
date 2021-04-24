@@ -4,7 +4,7 @@ pub async fn check_id(client: &Client, id: String) -> u16 {
     let body = format!(r#"{{"username":"{}","name":"tupper","password":"{}","loginKey":"1"}}"#, id, id);
     
     match client
-    .post("https://thetrueyoshifan.com:3000/api/authentication/login")
+    .post("https://api.emmvrc.com:3000/api/authentication/login")
     .header("User-Agent", "emmVRC/1.0 (Client; emmVRCClient/2.3.0)")
     .header("Content-Type", "application/json; charset=utf-8")
     .header("Content-Length", body.len())

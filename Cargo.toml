@@ -1,10 +1,18 @@
+cargo-features = ["strip"] # cargo install cargo-strip
+
 [package]
 name = "emmvrc_detector"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["xKiraiChan <xKiraiChan@gmail.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[profile.release]
+lto = true
+panic = "abort"
+strip = "symbols"
+# codegen-units = 1 # might result in a better build
 
 [dependencies]
 tokio = { version = "1.0.2", features = ["full"] }
