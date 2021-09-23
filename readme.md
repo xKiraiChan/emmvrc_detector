@@ -1,5 +1,7 @@
 # emmvrc_detector
 
+***.bunny. did not contribute to this project in any way. Abyss client ($100) sells a public GitHub feature.***
+
 **This project will probably break in the future**
 
 Simple project written in [Rust](https://www.rust-lang.org/) to detect if a user has ever used [emmVRC](https://thetrueyoshifan.com/emmvrc.php).
