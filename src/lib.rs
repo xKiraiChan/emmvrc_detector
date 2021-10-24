@@ -1,13 +1,16 @@
+#![allow(uncommon_codepoints)]
+
 use reqwest::Client;
 
 pub async fn check_id(client: &Client, id: String) -> u16 {
-    let body = format!(r#"{{"username":"{}","name":"tupper","password":"{}","loginKey":"1"}}"#, id, id);
-    
+    let new_id = id.replace("https://vrchat.com/home/user/", "");
+
+    let body = format!(r#"{{"username":"{}","name":"tupper","password":"{}","loginKey":"1"}}"#, new_id, new_id);
+
     match client
-    .post("https://api.emmvrc.com:3000/api/authentication/login")
-    .header("User-Agent", "emmVRC/1.0 (Client; emmVRCClient/2.3.0)")
-    .header("Content-Type", "application/json; charset=utf-8")
-    .header("Content-Length", body.len())
+    .post("https://api.emmvrc.com:443/api/authentication/login")
+    .header("user-agent", format!("emmVRC/1.0 ({5}; emmVRCClien{3}.1{4}{0}e{2}e{1}one)", ǲǲǲǱǲǱǱǱǲǱǱǲǱǱǱǱǱǲǱǲǲǱǲǱǲǲǲǲǱǲǱǲǲǱǲǲǱǱǱǲǱǲǲǱǱǲǱǱǲǱǱǲǲǱǱǲǱǲǲǱǲǱǲǲǱǲǱǱǱǱǲǱǱǱǱǲǱǲǱǲǲǱǱǱǲǲǱǱǱǱǱǲǲǲǲǱǲǱǱǱǲǲǱǲǱǱǲǲǲǱǱǱǲǱǲǱǲǲǲǲǲǱǱǱǲǲǲǱ, ǱǱǱǲǱǲǲǱǱǱǱǱǱǲǱǱǲǲǲǲǲǲǱǲǲǱǱǱǱǱǲǲǱǱǲǲǲǲǲǱǱǲǱǲǲǲǲǲǱǱǲǲǲǲǲǱǲǲǲǱǱǱǱǲǱǲǲǲǱǱǱǱǱǲǱǲǱǱǲǱǲǲǲǱǲǱǱǲǲǲǲǱǱǱǲǱǲǱǲǱǲǲǲǱǲǱǱǱǱǲǲǱǱǱǲǲǱǱǲǲǲǱǱǲǱǲǱǲ, ǲǲǱǱǲǲǲǲǲǱǱǲǲǱǲǲǱǲǲǲǲǲǱǲǱǲǲǲǲǲǱǱǲǲǲǱǱǱǱǱǱǱǱǲǱǲǱǱǱǲǲǱǲǱǱǱǲǱǲǱǱǱǱǲǲǱǱǱǲǱǱǲǲǲǱǲǱǱǱǱǲǱǱǱǱǱǱǱǱǲǱǲǱǲǱǲǲǲǱǱǲǲǲǲǲǱǲǲǲǲǱǲǲǲǱǱǱǲǲǲǱǲǱǱǱǲǲǲ, ǲǲǲǱǲǲǲǱǱǱǲǱǱǱǱǱǲǲǱǱǱǲǲǱǱǲǱǲǱǱǱǱǱǱǲǲǱǲǱǲǱǲǲǲǱǲǲǲǲǲǱǲǱǲǲǱǲǱǲǲǲǲǲǲǲǲǱǱǱǲǲǱǱǱǲǱǲǱǲǱǱǱǲǱǲǲǱǱǱǱǱǲǱǲǱǱǲǲǱǲǱǱǱǲǱǱǲǲǲǱǱǱǲǱǱǲǱǱǱǱǱǲǱǱǲǱǱǱ, ǲǲǲǱǲǱǲǱǱǲǲǲǱǱǱǲǱǱǲǲǲǱǱǱǲǲǱǱǲǲǲǲǱǲǲǱǱǲǱǱǱǲǱǱǱǲǲǱǱǱǲǲǲǱǲǲǲǲǱǱǲǲǲǱǲǲǱǲǱǲǲǲǱǲǱǱǲǱǲǱǱǲǲǲǱǱǱǱǱǲǱǲǲǱǱǱǲǱǱǲǱǲǲǲǲǲǱǱǱǲǲǱǲǱǲǱǲǲǲǲǱǱǲǱǱǲǱǲ, &ITS_STILL_PASTING_IF_YOU_HAVE_TO_COPY_SOMEONE_ELSES_WORK_TO_CREATE_YOURS[6..12]))
+    .header("content-type", "application/json; charset=utf-8")
     .body(body)
     .send()
     .await {
@@ -21,3 +24,10 @@ pub async fn check_id(client: &Client, id: String) -> u16 {
         Err(v) => { println!("{}", v); 2 },
     }
 }
+
+const ǲǲǲǱǲǱǱǱǲǱǱǲǱǱǱǱǱǲǱǲǲǱǲǱǲǲǲǲǱǲǱǲǲǱǲǲǱǱǱǲǱǲǲǱǱǲǱǱǲǱǱǲǲǱǱǲǱǲǲǱǲǱǲǲǱǲǱǱǱǱǲǱǱǱǱǲǱǲǱǲǲǱǱǱǲǲǱǱǱǱǱǲǲǲǲǱǲǱǱǱǲǲǱǲǱǱǲǲǲǱǱǱǲǱǲǱǲǲǲǲǲǱǱǱǲǲǲǱ: &str = ", H";
+const ǲǲǲǱǲǱǲǱǱǲǲǲǱǱǱǲǱǱǲǲǲǱǱǱǲǲǱǱǲǲǲǲǱǲǲǱǱǲǱǱǱǲǱǱǱǲǲǱǱǱǲǲǲǱǲǲǲǲǱǱǲǲǲǱǲǲǱǲǱǲǲǲǱǲǱǱǲǱǲǱǱǲǲǲǱǱǱǱǱǲǱǲǲǱǱǱǲǱǱǲǱǲǲǲǲǲǱǱǱǲǲǱǲǱǲǱǲǲǲǲǱǱǲǱǱǲǱǲ: &str = "1.5";
+const ITS_STILL_PASTING_IF_YOU_HAVE_TO_COPY_SOMEONE_ELSES_WORK_TO_CREATE_YOURS: &str = "Abyss Client is an overpaid joke";
+const ǱǱǱǲǱǲǲǱǱǱǱǱǱǲǱǱǲǲǲǲǲǲǱǲǲǱǱǱǱǱǲǲǱǱǲǲǲǲǲǱǱǲǱǲǲǲǲǲǱǱǲǲǲǲǲǱǲǲǲǱǱǱǱǲǱǲǲǲǱǱǱǱǱǲǱǲǱǱǲǱǲǲǲǱǲǱǱǲǲǲǲǱǱǱǲǱǲǱǲǱǲǲǲǱǲǱǱǱǱǲǲǱǱǱǲǲǱǱǲǲǲǱǱǲǱǲǱǲ: &str = "t; N";
+const ǲǲǱǱǲǲǲǲǲǱǱǲǲǱǲǲǱǲǲǲǲǲǱǲǱǲǲǲǲǲǱǱǲǲǲǱǱǱǱǱǱǱǱǲǱǲǱǱǱǲǲǱǲǱǱǱǲǱǲǱǱǱǱǲǲǱǱǱǲǱǱǲǲǲǱǲǱǱǱǱǲǱǱǱǱǱǱǱǱǲǱǲǱǲǱǲǲǲǱǱǲǲǲǲǲǱǲǲǲǲǱǲǲǲǱǱǱǲǲǲǱǲǱǱǱǲǲǲ: &str = "ads";
+const ǲǲǲǱǲǲǲǱǱǱǲǱǱǱǱǱǲǲǱǱǱǲǲǱǱǲǱǲǱǱǱǱǱǱǲǲǱǲǱǲǱǲǲǲǱǲǲǲǲǲǱǲǱǲǲǱǲǱǲǲǲǲǲǲǲǲǱǱǱǲǲǱǱǱǲǱǲǱǲǱǱǱǲǱǲǲǱǱǱǱǱǲǱǲǱǱǲǲǱǲǱǱǱǲǱǱǲǲǲǱǱǱǲǱǱǲǱǱǱǱǱǲǱǱǲǱǱǱ: &str = "t/2";
