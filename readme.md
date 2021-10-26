@@ -1,3 +1,6 @@
+# No longer possible
+The emmVRC API always returns "invalid combination", regardless of whether or not an account exists.
+
 # emmvrc_detector
 
 ***.bunny. did not contribute to this project in any way. Abyss client ($100) sells a public GitHub feature.***
